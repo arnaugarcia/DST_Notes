@@ -520,3 +520,11 @@ Organiza los elementos usando una política FIFO (First In First Out).
   * Bidireccional
 
   ![PDI](/assets/img/bidirectional.png)
+
+  * Ordenada
+
+  * Ejemplo de inserción
+    ![PDI](/assets/img/insertion.png)
+
+ ### operaciones
+ ---
