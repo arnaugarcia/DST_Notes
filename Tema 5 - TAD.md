@@ -517,6 +517,150 @@ Organiza los elementos usando una política FIFO (First In First Out).
   * PDI (Punto de Interés)
 
   ![PDI](/assets/img/pdi.png)
+
+  ### operaciones
+  ---
+  | Name    |   Argumentos   |  Devuelve |
+  | :------ | :------------: | ------: |
+  | Create  |       ∅        |   List |
+  | Insert  | List, Elemento |   void |
+  | Remove  |     List     |   int |
+  | Get   |     List      |   int |
+  | Empty?  |     List      | Boolean |
+  | MoveToFirst   |     List      | List |
+  | End?    |     List      |       boolean |
+  | Destroy | List | void |
+
+ #### Header - list.h
+  ``` c
+  #ifndef _LIST_H_
+  #define _LIST_H_
+
+ typedef struct {
+   int e;
+   struct _node *next;
+ } Node;
+
+ typedef struct {
+   Node *first;
+   Node *last;
+   int size;
+ } List;
+
+ List LIST_Create();
+
+ List LIST_Insert(List list, int element);
+
+ int LIST_Remove(List *);
+
+ int LIST_Get(List list);
+
+ boolean LIST_Is_empty(List);
+
+ List LIST_Go_first(List list);
+
+ int LIST_Next(List);
+
+ int LIST_End(List);
+
+ void LIST_Destroy(List list);
+
+  #endif
+
+  ```
+
+  #### Source - list.c
+  ```c
+  #include "list.h"
+
+ List LIST_create() {
+   List list;
+
+   // Creem el node fatasma
+   list.first = (Node *) malloc(sizeof(Node));
+
+   if (list.first == NULL) {
+     // Error
+   } else {
+     list.last = list.first;
+     list.last->next = NULL;
+   }
+
+   return list;
+ }
+
+ List LIST_Insert(List list, int element) {
+   Node *node = (Node *) malloc(sizeof(Node));
+
+   if (n == NULL) {
+     // Error
+   } else {
+     node->element = element;
+     n->next = list.last->next;
+     list.last = node;
+   }
+
+   return list;
+ }
+
+ int LIST_Remove(List *list) {
+   if (list->last->next == NULL) {
+     return 0;
+   }
+
+   // Declaro un auxiliar
+   Node *tmp = list->last->next;
+   //
+   list->last->next = list->last->next->next;
+   free(tmp);
+
+   return 1;
+ }
+
+ int LIST_Get(List list) {
+
+   if (list->last->next == NULL) { // Estem al final
+     return UNDEFINED; // -1
+   }
+
+   return list.last->next->e;
+
+ }
+
+ int LIST_Is_empty(List list) {
+   return list.first->next == NULL;
+ }
+
+ List LIST_Go_first(List list) {
+   list->last = list->first;
+ }
+
+ int LIST_Next(List) {
+   if (list_last->next == NULL) {
+     return 0;
+   }
+
+   list->last = list->last->next;
+   return 1;
+ }
+
+ int LIST_End(List) {
+   return list.last->next == NULL;
+ }
+
+ void LIST_Destroy(List *list) {
+
+   LIST_Go_first(list);
+
+   while (!LIST_Is_empty(*list)) { // Llista no buida
+     LIST_Remove(list);
+   }
+
+   free(list->first);
+   list->first = list->last = NULL; // Tots NULL
+ }
+
+  ```
   * Bidireccional
 
   ![PDI](/assets/img/bidirectional.png)
@@ -524,148 +668,5 @@ Organiza los elementos usando una política FIFO (First In First Out).
   * Ordenada
 
   * Ejemplo de inserción
-    ![PDI](/assets/img/insertion.png)
 
- ### operaciones
- ---
- | Name    |   Argumentos   |  Devuelve |
- | :------ | :------------: | ------: |
- | Create  |       ∅        |   List |
- | Insert  | List, Elemento |   void |
- | Remove  |     List     |   int |
- | Get   |     List      |   int |
- | Empty?  |     List      | Boolean |
- | MoveToFirst   |     List      | List |
- | End?    |     List      |       boolean |
- | Destroy | List | void |
-
-#### Header - list.h
- ``` c
- #ifndef _LIST_H_
- #define _LIST_H_
-
-typedef struct {
-  int e;
-  struct _node *next;
-} Node;
-
-typedef struct {
-  Node *first;
-  Node *last;
-  int size;
-} List;
-
-List LIST_Create();
-
-List LIST_Insert(List list, int element);
-
-int LIST_Remove(List *);
-
-int LIST_Get(List list);
-
-boolean LIST_Is_empty(List);
-
-List LIST_Go_first(List list);
-
-int LIST_Next(List);
-
-int LIST_End(List);
-
-void LIST_Destroy(List list);
-
- #endif
-
- ```
-
- #### Source - list.c
- ```c
- #include "list.h"
-
-List LIST_create() {
-  List list;
-
-  // Creem el node fatasma
-  list.first = (Node *) malloc(sizeof(Node));
-
-  if (list.first == NULL) {
-    // Error
-  } else {
-    list.last = list.first;
-    list.last->next = NULL;
-  }
-
-  return list;
-}
-
-List LIST_Insert(List list, int element) {
-  Node *node = (Node *) malloc(sizeof(Node));
-
-  if (n == NULL) {
-    // Error
-  } else {
-    node->element = element;
-    n->next = list.last->next;
-    list.last = node;
-  }
-
-  return list;
-}
-
-int LIST_Remove(List *list) {
-  if (list->last->next == NULL) {
-    return 0;
-  }
-
-  // Declaro un auxiliar
-  Node *tmp = list->last->next;
-  //
-  list->last->next = list->last->next->next;
-  free(tmp);
-
-  return 1;
-}
-
-int LIST_Get(List list) {
-
-  if (list->last->next == NULL) { // Estem al final
-    return UNDEFINED; // -1
-  }
-
-  return list.last->next->e;
-
-}
-
-int LIST_Is_empty(List list) {
-  return list.first->next == NULL;
-}
-
-List LIST_Go_first(List list) {
-  list->last = list->first;
-}
-
-int LIST_Next(List) {
-  if (list_last->next == NULL) {
-    return 0;
-  }
-
-  list->last = list->last->next;
-  return 1;
-}
-
-int LIST_End(List) {
-  return list.last->next == NULL;
-}
-
-void LIST_Destroy(List *list) {
-
-  LIST_Go_first(list);
-
-  while (!LIST_Is_empty(*list)) { // Llista no buida
-    LIST_Remove(list);
-  }
-
-  free(list->first);
-  list->first = list->last = NULL; // Tots NULL
-}
-
- ```
+  ![PDI](/assets/img/insertion.png)
