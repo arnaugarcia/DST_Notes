@@ -595,7 +595,6 @@ List LIST_create() {
   }
 
   return list;
-
 }
 
 List LIST_Insert(List list, int element) {
@@ -610,6 +609,63 @@ List LIST_Insert(List list, int element) {
   }
 
   return list;
+}
+
+int LIST_Remove(List *list) {
+  if (list->last->next == NULL) {
+    return 0;
+  }
+
+  // Declaro un auxiliar
+  Node *tmp = list->last->next;
+  //
+  list->last->next = list->last->next->next;
+  free(tmp);
+
+  return 1;
+}
+
+int LIST_Get(List list) {
+
+  if (list->last->next == NULL) { // Estem al final
+    return UNDEFINED; // -1
+  }
+
+  return list.last->next->e;
+
+}
+
+int LIST_Is_empty(List list) {
+  return list.first->next == NULL;
+}
+
+List LIST_Go_first(List list) {
+  list->last = list->first;
+}
+
+int LIST_Next(List) {
+  if (list_last->next == NULL) {
+    return 0;
+  }
+
+  list->last = list->last->next;
+  return 1;
+}
+
+int LIST_End(List) {
+  return list.last->next == NULL;
+}
+
+void LIST_Destroy(List *list) {
+
+  LIST_Go_first(list);
+
+  while (!LIST_Is_empty(*list)) { // Llista no buida
+    LIST_Remove(list);
+  }
+
+  free(list->first);
+  list->first = list->last = NULL; // Tots NULL
 }
 
  ```
