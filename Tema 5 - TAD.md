@@ -663,6 +663,18 @@ Organiza los elementos usando una política FIFO (First In First Out).
   ```
   * Bidireccional
 
+  Em permet desplaçar-me cap endavant i cap enderrere
+
+  A les operacions de la llista PDI, afegirem le següents operacions:
+
+    * Retrocedeix
+    * Create: Es creen 2 fantasmes. El first ->next apunta al last, last-> previous, last -> next apuntan a NULL.
+    * Es inici?
+    * Es buida: si el punter de first es el mateix de last
+    * Ves al final
+    * Inserir Devant // Subsitueix inserir
+    * Inserir Darrere // Subsitueix inserir
+
   ![PDI](/assets/img/bidirectional.png)
 
   * Ordenada (Sorted List)
